@@ -7,7 +7,7 @@ const EmployeeForm = () => {
     const navigate =useNavigate();
     const {id}= useParams();
     const [showAlert,setShowAlert] =useState(false);
-    const{inputVlaues,resetForm,handleInputChange}=UseForm({
+    const{inputVlaues,resetForm,handleInputChange,setForm}=UseForm({
         name:"",
         email:"",
         address :"",
@@ -16,7 +16,8 @@ const EmployeeForm = () => {
     useEffect(()=>{
         if(id){
             const employee =getEmployeeById(id);
-            resetForm(employee);
+            setForm(employee);
+            
         }
     },{id})
 
