@@ -14,7 +14,7 @@ const Navbar = () => {
     <div className="collapse navbar-collapse" id="navbarColor01">
       <ul className="navbar-nav me-auto">
       </ul>
-      <butto className="btn btn-outline-secoundry my-2 my-sn-0" onClick={()=>navigate("/create-employee")} > create Employee</butto>
+      <button className="btn btn-outline-secoundry my-2 my-sn-0" onClick={()=>navigate("/create-employee")} > create Employee</button>
      
     </div>
   </div>

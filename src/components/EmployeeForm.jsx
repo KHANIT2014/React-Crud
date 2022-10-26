@@ -1,20 +1,33 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { UseForm } from '../Hooks/UseForm';
+import { addEmployee, editEmployee, getEmployeeById } from '../Services/localstorage';
 
 const EmployeeForm = () => {
     const navigate =useNavigate();
+    const {id}= useParams();
+    const [showAlert,setShowAlert] =useState(false);
     const{inputVlaues,resetForm,handleInputChange}=UseForm({
         name:"",
         email:"",
         address :"",
         phone :"", 
     });
+    useEffect(()=>{
+        if(id){
+            const employee =getEmployeeById(id);
+            resetForm(employee);
+        }
+    },{id})
 
     const mySubmit=(e)=>{
         e.preventDefault();
-        console.log(inputVlaues);
+        id ? editEmployee(id,inputVlaues) :  addEmployee(inputVlaues);
+        setShowAlert(true)
         resetForm();
+        setTimeout(()=>{
+            setShowAlert(false)
+        },2000);
         
     }
 
@@ -22,7 +35,7 @@ const EmployeeForm = () => {
     <div>
         <div className="d-flex my-5 justify-content-between">
             <div className="btn btn-outline-secondary" onClick={()=>navigate("/")}>Back</div>
-            <h1 >Add Employee</h1>
+            <h1>{id ? "Edit " :"create" }Employee</h1>
         </div>
 
     <div className="card border-primary p-5 m-5">
@@ -48,6 +61,15 @@ const EmployeeForm = () => {
             </div>
         </form>
     </div>
+    {
+        showAlert &&(
+            <div className="px-5">
+                <div className="alert alert-success text-white" role="alert">
+                    Well done new employee added
+                </div>
+            </div>
+        )
+    }
     </div>
   )
 }
